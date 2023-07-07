@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class TrackManager : EditorWindow
 {
-    private const string tracksPath = "Assets/Assigned/Tracks";
+    private const string tracksPath = "Assets/Assigned/Tracks/";
     private const string trackPiecesPath = "Assets/Assigned/TrackPieces/";
 
     private VisualElement root;
@@ -71,7 +71,7 @@ public class TrackManager : EditorWindow
         topGroup.style.flexDirection = FlexDirection.Row;
 
         trackObjectField = new ObjectField();
-        trackObjectField.objectType = typeof(TrackPiece);
+        trackObjectField.objectType = typeof(Track);
         trackObjectField.style.maxWidth = 300;
         trackObjectField.label = "Track";
         trackObjectField.tooltip = "Drag or select the track you want to work on.";
@@ -81,13 +81,22 @@ public class TrackManager : EditorWindow
                 Debug.Log(evt.newValue.name);
         });
 
+        Button button = new Button();
+        button.text = "Create New Track";
+        button.tooltip = "Press to create a new track.";
+        button.clicked += () =>
+        {
+            root.Remove(mainGroup);
+            root.Add(newTrackGroup);
+        };
+
         mainGroup.Add(topGroup);
         topGroup.Add(trackObjectField);
+        topGroup.Add(button);
     }
 
     private void CreateTrackPiecesGrid()
     {
-        // Create a horizontal group with 3 boxes of the same size 50x50
         GroupBox piecesGrid = new GroupBox();
         piecesGrid.style.flexDirection = FlexDirection.Row;
         piecesGrid.style.flexWrap = Wrap.Wrap;
@@ -181,4 +190,15 @@ public class TrackManager : EditorWindow
         root.Remove(newTrackGroup);
         root.Add(mainGroup);
     }
+
+
+    //private Texture2D GetPrefabPreview(string path)
+    //{
+    //    Debug.Log("Generate preview for " + path);
+    //    GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+    //    var editor = UnityEditor.Editor.CreateEditor(prefab);
+    //    Texture2D tex = editor.RenderStaticPreview(path, null, 200, 200);
+    //    EditorWindow.DestroyImmediate(editor);
+    //    return tex;
+    //}
 }
