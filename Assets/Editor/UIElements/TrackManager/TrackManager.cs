@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UIElements;
 
 
@@ -104,19 +105,33 @@ public class TrackManager : EditorWindow
         piecesGrid.style.justifyContent = Justify.FlexStart;
 
         string[] assets = AssetDatabase.FindAssets($"t:{typeof(TrackPiece).Name}", new[] { trackPiecesPath });
-        foreach (var guid in assets)
+        foreach (string id in assets)
         {
-            TrackPiece trackPiece = AssetDatabase.LoadAssetAtPath<TrackPiece>(AssetDatabase.GUIDToAssetPath(guid));
+            TrackPiece trackPiece = AssetDatabase.LoadAssetAtPath<TrackPiece>(AssetDatabase.GUIDToAssetPath(id));
+            if (!trackPiece)
+                continue;
 
-            GroupBox box = new GroupBox();
-            box.style.width = 50;
-            box.style.height = 50;
-            box.style.marginLeft = 5;
-            box.style.marginRight = 5;
-            box.style.marginTop = 5;
-            box.style.marginBottom = 5;
-            box.style.backgroundColor = Color.green;
-            piecesGrid.Add(box);
+            Image image = new Image();
+            image.style.width = 50;
+            image.style.height = 50;
+            image.style.marginLeft = 5;
+            image.style.marginRight = 5;
+            image.style.marginTop = 5;
+            image.style.marginBottom = 5;
+            image.style.unityBackgroundScaleMode = ScaleMode.ScaleToFit;
+
+            if (trackPiece.IsCorrectlySet)
+            {
+                image.style.backgroundColor = Color.black;
+                image.image = AssetPreview.GetAssetPreview(trackPiece.Icon);
+                image.tooltip = trackPiece.name;
+            }
+            else
+            {
+                image.style.backgroundColor = Color.red;
+                image.tooltip = $"{trackPiece.name}: Not correctly set.";
+            }
+            piecesGrid.Add(image);
         }
 
         mainGroup.Add(piecesGrid);
@@ -190,15 +205,4 @@ public class TrackManager : EditorWindow
         root.Remove(newTrackGroup);
         root.Add(mainGroup);
     }
-
-
-    //private Texture2D GetPrefabPreview(string path)
-    //{
-    //    Debug.Log("Generate preview for " + path);
-    //    GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-    //    var editor = UnityEditor.Editor.CreateEditor(prefab);
-    //    Texture2D tex = editor.RenderStaticPreview(path, null, 200, 200);
-    //    EditorWindow.DestroyImmediate(editor);
-    //    return tex;
-    //}
 }

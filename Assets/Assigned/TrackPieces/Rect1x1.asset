@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a2198198db0dd43b74111e2f1c4ae7, type: 3}
   m_Name: Rect1x1
   m_EditorClassIdentifier: 
+  prefab: {fileID: 1832318147203253751, guid: abf834aaa94ca594ca0b2b230ca72272, type: 3}
+  icon: {fileID: 21300000, guid: e41b7cbd2e35de348bd5c7efc57373e3, type: 3}
