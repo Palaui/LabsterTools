@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class TrackPiecePlacer : MonoBehaviour
 {
-    private const string ON_GRID_AUTO = "Track piece was not on grid and has been placed automatically. Please, ask again to add to track if the current position is correct.";
-
-    private const float GRID_SIZE = 6;
-    private const float RECT = 90;
-    private const float EPSILON = 0.01f;
-
     private TrackScriptable track;
     private TrackPieceScriptable piece;
 
@@ -25,10 +19,10 @@ public class TrackPiecePlacer : MonoBehaviour
 
     public void SetOnGrid()
     {
-        Vector3 pos = transform.position / GRID_SIZE;
-        transform.position = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), Mathf.Round(pos.z)) * GRID_SIZE;
-        Vector3 euler = transform.eulerAngles / RECT;
-        euler.y = Mathf.Round(euler.y) * RECT;
+        Vector3 pos = transform.position / EditorConstants.GRID_SIZE;
+        transform.position = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), Mathf.Round(pos.z)) * EditorConstants.GRID_SIZE;
+        Vector3 euler = transform.eulerAngles / EditorConstants.RECT;
+        euler.y = Mathf.Round(euler.y) * EditorConstants.RECT;
         transform.eulerAngles = euler;
     }
 
@@ -36,7 +30,7 @@ public class TrackPiecePlacer : MonoBehaviour
     {
         if (!IsOnGrid())
         {
-            Alerted?.Invoke(this, ON_GRID_AUTO);
+            Alerted?.Invoke(this, EditorConstants.ON_GRID_AUTO);
             SetOnGrid();
             return;
         }
@@ -57,8 +51,10 @@ public class TrackPiecePlacer : MonoBehaviour
 
     private bool IsOnGrid()
     {
-        Vector3 pos = transform.position / GRID_SIZE;
-        return Mathf.Abs(pos.x - Mathf.Round(pos.x)) < EPSILON && Mathf.Abs(pos.y - Mathf.Round(pos.y)) < EPSILON && Mathf.Abs(pos.z - Mathf.Round(pos.z)) < EPSILON;
+        Vector3 pos = transform.position / EditorConstants.GRID_SIZE;
+        return Mathf.Abs(pos.x - Mathf.Round(pos.x)) < EditorConstants.EPSILON &&
+            Mathf.Abs(pos.y - Mathf.Round(pos.y)) < EditorConstants.EPSILON && 
+            Mathf.Abs(pos.z - Mathf.Round(pos.z)) < EditorConstants.EPSILON;
     }
 
     private void OnDestroy()

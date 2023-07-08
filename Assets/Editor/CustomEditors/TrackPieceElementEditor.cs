@@ -5,12 +5,15 @@ using UnityEngine;
 public class TrackPieceElementEditor : Editor
 {
     private TrackPieceElement script;
+    private string alert = "";
 
 
     private void OnEnable()
     {
         script = target as TrackPieceElement;
+        script.Alerted += (_, str) => alert = str;
     }
+
 
     public override void OnInspectorGUI()
     {
@@ -21,5 +24,8 @@ public class TrackPieceElementEditor : Editor
 
         if (GUILayout.Button("Delete"))
             script.Delete();
+
+        if (alert != "")
+            EditorGUILayout.HelpBox(alert, MessageType.Warning);
     }
 }
