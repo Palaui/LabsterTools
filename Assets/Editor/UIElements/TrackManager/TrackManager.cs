@@ -16,7 +16,7 @@ public class TrackManager : EditorWindow
     private ObjectField trackObjectField;
     private GroupBox piecesGrid;
 
-    private TrackPiece selectedPiece = null;
+    private TrackPieceScriptable selectedPiece = null;
     private GameObject currentPieceGhost = null;
 
 
@@ -80,14 +80,13 @@ public class TrackManager : EditorWindow
         topGroup.style.flexDirection = FlexDirection.Row;
 
         trackObjectField = new ObjectField();
-        trackObjectField.objectType = typeof(Track);
+        trackObjectField.objectType = typeof(TrackScriptable);
         trackObjectField.style.maxWidth = 300;
         trackObjectField.label = "Track";
         trackObjectField.tooltip = "Drag or select the track you want to work on.";
         trackObjectField.RegisterValueChangedCallback((evt) =>
         {
-            if (evt.newValue != null)
-                Debug.Log(evt.newValue.name);
+            RefreshGrid();
         });
 
         Button button = new Button();
@@ -120,16 +119,23 @@ public class TrackManager : EditorWindow
 
     private void CreateTrackPiecesGrid()
     {
+        if (trackObjectField.value == null)
+        {
+            selectedPiece = null;
+            DestroyGhost();
+            return;
+        }
+
         piecesGrid = new GroupBox();
         piecesGrid.style.flexDirection = FlexDirection.Row;
         piecesGrid.style.flexWrap = Wrap.Wrap;
         piecesGrid.style.alignItems = Align.FlexStart;
         piecesGrid.style.justifyContent = Justify.FlexStart;
 
-        string[] assets = AssetDatabase.FindAssets($"t:{typeof(TrackPiece).Name}", new[] { trackPiecesPath });
+        string[] assets = AssetDatabase.FindAssets($"t:{typeof(TrackPieceScriptable).Name}", new[] { trackPiecesPath });
         foreach (string id in assets)
         {
-            TrackPiece trackPiece = AssetDatabase.LoadAssetAtPath<TrackPiece>(AssetDatabase.GUIDToAssetPath(id));
+            TrackPieceScriptable trackPiece = AssetDatabase.LoadAssetAtPath<TrackPieceScriptable>(AssetDatabase.GUIDToAssetPath(id));
             if (!trackPiece)
                 continue;
 
@@ -171,7 +177,8 @@ public class TrackManager : EditorWindow
 
     private void RefreshGrid()
     {
-        mainGroup.Remove(piecesGrid);
+        if (mainGroup.Contains(piecesGrid))
+            mainGroup.Remove(piecesGrid);
         CreateTrackPiecesGrid();
     }
 
@@ -231,7 +238,7 @@ public class TrackManager : EditorWindow
 
     private void CreateNewTrack(string trackName)
     {
-        Track track = CreateInstance<Track>();
+        TrackScriptable track = CreateInstance<TrackScriptable>();
         track.name = trackName;
         AssetDatabase.CreateAsset(track, $"{tracksPath}{trackName}.asset");
         AssetDatabase.SaveAssets();
@@ -245,6 +252,8 @@ public class TrackManager : EditorWindow
     {
         DestroyGhost();
         currentPieceGhost = Instantiate(selectedPiece.Prefab);
+        TrackPiecePlacer placer = currentPieceGhost.AddComponent<TrackPiecePlacer>();
+        placer.Initialize(trackObjectField.value as TrackScriptable, selectedPiece);
         Selection.objects = new Object[] { currentPieceGhost };
     }
 
