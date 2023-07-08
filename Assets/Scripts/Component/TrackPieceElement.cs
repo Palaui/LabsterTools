@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class TrackPieceElement : MonoBehaviour
 {
+    [SerializeField] private TrackPieceFlag flag = TrackPieceFlag.None;
+
     private TrackScriptable track;
     private TrackPieceModel model;
 
@@ -39,7 +41,7 @@ public class TrackPieceElement : MonoBehaviour
             return;
         }
 
-        track.ModifyPiece(model);
+        track.ModifyPiece(model, flag);
         Alerted?.Invoke(this, "");
         Selection.objects = new UnityEngine.Object[] { };
     }

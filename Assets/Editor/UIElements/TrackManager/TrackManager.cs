@@ -7,8 +7,8 @@ using UnityEngine.UIElements;
 
 public class TrackManager : EditorWindow
 {
-    private const string tracksPath = "Assets/Assigned/Tracks/";
-    private const string trackPiecesPath = "Assets/Assigned/TrackPieces/";
+    private const string TRACKS_PATH = "Assets/Assigned/Tracks/";
+    private const string TRACK_PIECES_PATH = "Assets/Assigned/TrackPieces/";
 
     private List<GameObject> loadedPieces = new List<GameObject>();
     private GameObject currentPieceGhost = null;
@@ -24,10 +24,10 @@ public class TrackManager : EditorWindow
 
 
     [MenuItem("Labster/TrackManager")]
-    public static void ShowExample()
+    public static void ShowWindow()
     {
-        TrackManager wnd = GetWindow<TrackManager>();
-        wnd.titleContent = new GUIContent("TrackManager");
+        TrackManager window = GetWindow<TrackManager>();
+        window.titleContent = new GUIContent("TrackManager");
     }
 
     private void OnDisable()
@@ -136,7 +136,7 @@ public class TrackManager : EditorWindow
         piecesGrid.style.alignItems = Align.FlexStart;
         piecesGrid.style.justifyContent = Justify.FlexStart;
 
-        string[] assets = AssetDatabase.FindAssets($"t:{typeof(TrackPieceScriptable).Name}", new[] { trackPiecesPath });
+        string[] assets = AssetDatabase.FindAssets($"t:{typeof(TrackPieceScriptable).Name}", new[] { TRACK_PIECES_PATH });
         foreach (string id in assets)
         {
             TrackPieceScriptable trackPiece = AssetDatabase.LoadAssetAtPath<TrackPieceScriptable>(AssetDatabase.GUIDToAssetPath(id));
@@ -244,12 +244,14 @@ public class TrackManager : EditorWindow
     {
         TrackScriptable track = CreateInstance<TrackScriptable>();
         track.name = trackName;
-        AssetDatabase.CreateAsset(track, $"{tracksPath}{trackName}.asset");
+        AssetDatabase.CreateAsset(track, $"{TRACKS_PATH}{trackName}.asset");
         AssetDatabase.SaveAssets();
 
         trackObjectField.value = track;
         root.Remove(newTrackGroup);
         root.Add(mainGroup);
+
+        RefreshGrid();
     }
 
     private void InstantiateGhost()
