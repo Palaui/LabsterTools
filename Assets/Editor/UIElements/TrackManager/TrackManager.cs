@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -9,6 +10,9 @@ public class TrackManager : EditorWindow
     private const string tracksPath = "Assets/Assigned/Tracks/";
     private const string trackPiecesPath = "Assets/Assigned/TrackPieces/";
 
+    private List<GameObject> loadedPieces = new List<GameObject>();
+    private GameObject currentPieceGhost = null;
+
     private VisualElement root;
     private GroupBox mainGroup;
     private GroupBox newTrackGroup;
@@ -17,7 +21,6 @@ public class TrackManager : EditorWindow
     private GroupBox piecesGrid;
 
     private TrackPieceScriptable selectedPiece = null;
-    private GameObject currentPieceGhost = null;
 
 
     [MenuItem("Labster/TrackManager")]
@@ -87,6 +90,7 @@ public class TrackManager : EditorWindow
         trackObjectField.RegisterValueChangedCallback((evt) =>
         {
             RefreshGrid();
+            Load();
         });
 
         Button button = new Button();
@@ -254,6 +258,13 @@ public class TrackManager : EditorWindow
         currentPieceGhost = Instantiate(selectedPiece.Prefab);
         TrackPiecePlacer placer = currentPieceGhost.AddComponent<TrackPiecePlacer>();
         placer.Initialize(trackObjectField.value as TrackScriptable, selectedPiece);
+        placer.Completed += (_, _) =>
+        {
+            selectedPiece = null;
+            RefreshGrid();
+            Load();
+        };
+
         Selection.objects = new Object[] { currentPieceGhost };
     }
 
@@ -261,5 +272,31 @@ public class TrackManager : EditorWindow
     {
         if (currentPieceGhost != null)
             DestroyImmediate(currentPieceGhost);
+    }
+
+    private void Load()
+    {
+        DestroyGhost();
+
+        foreach (GameObject piece in loadedPieces)
+            DestroyImmediate(piece);
+        loadedPieces.Clear();
+
+        if (trackObjectField.value == null)
+            return;
+
+        TrackScriptable track = trackObjectField.value as TrackScriptable;
+        if (track.PieceModels.Count == 0)
+            return;
+
+        for (int i = 0; i < track.PieceModels.Count; i++)
+        {
+            TrackPieceModel model = track.PieceModels[i];
+            GameObject spawnedPiece = Instantiate(model.piece.Prefab);
+            spawnedPiece.transform.SetPositionAndRotation(model.position, model.rotation);
+            loadedPieces.Add(spawnedPiece);
+            TrackPieceElement element = spawnedPiece.AddComponent<TrackPieceElement>();
+            element.Initialize(track, model);
+        }
     }
 }

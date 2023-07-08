@@ -5,27 +5,30 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Track", menuName = "Labster/Track", order = 1)]
 public class TrackScriptable : ScriptableObject
 {
-    [SerializeField] private List<TrackPieceModel> pieces;
+    [SerializeField] private List<TrackPieceModel> pieceModels;
 
 
-    public IReadOnlyList<TrackPieceModel> Pieces => pieces;
+    public IReadOnlyList<TrackPieceModel> PieceModels => pieceModels;
 
 
 #if UNITY_EDITOR
 
-    public void AddPiece(TrackPieceModel piece)
+    public void AddPiece(TrackPieceModel model)
     {
-        pieces.Add(piece);
+        if (!pieceModels.Any(entry => entry.id == model.id))
+            pieceModels.Add(model);
     }
 
-    public void ModifyPiece(TrackPieceModel piece)
+    public void ModifyPiece(TrackPieceModel model)
     {
-        pieces.FirstOrDefault(entry => entry.piece.name == piece.piece.name);
+        if (pieceModels.Any(entry => entry.id == model.id))
+            pieceModels.FirstOrDefault(entry => entry.id == model.id);
     }
 
-    public void RemovePiece(TrackPieceModel piece)
+    public void RemovePiece(TrackPieceModel model)
     {
-        pieces.Remove(piece);
+        if (pieceModels.Any(entry => entry.id == model.id))
+            pieceModels.Remove(model);
     }
 
 #endif

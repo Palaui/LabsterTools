@@ -1,18 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrackPieceElement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private TrackScriptable track;
+    private TrackPieceModel model;
+
+
+    public void Initialize(TrackScriptable track, TrackPieceModel model)
     {
-        
+        this.track = track;
+        this.model = model;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Modify()
     {
-        
+        if (track == null || model.piece == null)
+        {
+            Debug.LogError("TrackPieceElement: Track or model is null");
+            return;
+        }
+
+        track.ModifyPiece(model);
+    }
+
+    public void Delete()
+    {
+        if (track == null || model.piece == null)
+        {
+            Debug.LogError("TrackPieceElement: Track or model is null");
+            return;
+        }
+
+        track.RemovePiece(model);
+        DestroyImmediate(gameObject);
     }
 }

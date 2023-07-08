@@ -12,3 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b789c98c02a644e8f3dcd44c06f554, type: 3}
   m_Name: SuperTrack
   m_EditorClassIdentifier: 
+  pieces:
+  - piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: -6, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: -6, y: 0, z: 6}
+    rotation: {x: 0, y: 0, z: 0, w: 1}

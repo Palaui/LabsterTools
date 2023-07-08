@@ -5,11 +5,13 @@ using UnityEngine;
 public class TrackPiecePlacerEditor :Editor
 {
     private TrackPiecePlacer script;
+    private string alert = "";
 
 
     private void OnEnable()
     {
         script = target as TrackPiecePlacer;
+        script.Alerted += (_, str) => alert = str;
     }
 
     public override void OnInspectorGUI()
@@ -21,5 +23,8 @@ public class TrackPiecePlacerEditor :Editor
 
         if (GUILayout.Button("Add To Track"))
             script.AddToTrack();
+
+        if (alert != "")
+            EditorGUILayout.HelpBox(alert, MessageType.Warning);
     }
 }
