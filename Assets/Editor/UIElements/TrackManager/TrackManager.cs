@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UIElements;
 
 
@@ -15,6 +14,7 @@ public class TrackManager : EditorWindow
     private GroupBox newTrackGroup;
 
     private ObjectField trackObjectField;
+    private GroupBox piecesGrid;
 
 
     [MenuItem("Labster/TrackManager")]
@@ -91,6 +91,19 @@ public class TrackManager : EditorWindow
             root.Add(newTrackGroup);
         };
 
+        Button refreshButton = new Button();
+        refreshButton.text = "Refresh";
+        refreshButton.tooltip = "Refresh this window.";
+        refreshButton.style.position = Position.Absolute;
+        refreshButton.style.top = 0;
+        refreshButton.style.right = 0;
+        refreshButton.clicked += () =>
+        {
+            mainGroup.Remove(piecesGrid);
+            CreateTrackPiecesGrid();
+        };
+
+        mainGroup.Add(refreshButton);
         mainGroup.Add(topGroup);
         topGroup.Add(trackObjectField);
         topGroup.Add(button);
@@ -98,7 +111,7 @@ public class TrackManager : EditorWindow
 
     private void CreateTrackPiecesGrid()
     {
-        GroupBox piecesGrid = new GroupBox();
+        piecesGrid = new GroupBox();
         piecesGrid.style.flexDirection = FlexDirection.Row;
         piecesGrid.style.flexWrap = Wrap.Wrap;
         piecesGrid.style.alignItems = Align.FlexStart;
@@ -133,7 +146,7 @@ public class TrackManager : EditorWindow
             }
             piecesGrid.Add(image);
         }
-
+        
         mainGroup.Add(piecesGrid);
     }
 
