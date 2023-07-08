@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Playables;
 
 public class CarManager : EditorWindow
 {
@@ -220,6 +221,7 @@ public class CarManager : EditorWindow
         accelerationField.RegisterCallback<ChangeEvent<float>>((evt) =>
         {
             onChangeAction(evt.newValue);
+            EditorUtility.SetDirty(carObjectField.value as CarScriptable);
         });
         return accelerationField;
     }
@@ -260,5 +262,6 @@ public class CarManager : EditorWindow
         // Get Data scriptable
         DataScriptable data = AssetDatabase.LoadAssetAtPath<DataScriptable>(DATA_PATH);
         data.UpdateCars(cars);
+        EditorUtility.SetDirty(data);
     }
 }

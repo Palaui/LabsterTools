@@ -10,6 +10,60 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b789c98c02a644e8f3dcd44c06f554, type: 3}
-  m_Name: Full SPeed Rect
+  m_Name: Full Speed Rect
   m_EditorClassIdentifier: 
-  pieceModels: []
+  pieceModels:
+  - id: 82e6076c-a40b-4219-872c-8ab78cadbe88
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: b67678d0-4e57-4544-9d10-2268282cf64b
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 6}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: b33f2b7e-8488-46b5-b01a-526a04542f87
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 12}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: e6214367-03e2-4e10-9657-eaeffecccdb5
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 18}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: fd11c2d4-db2e-4cde-b9dc-72abe082eb51
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 24}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: f2565612-a7e8-480e-8651-d7064b60f7d1
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 30}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: 563e5528-9e32-4721-a8b8-773f6af5db10
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 36}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: e5145dc1-78aa-4dd5-82cd-7d5368b3f4e9
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 42}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: 64c8feaa-d4ad-48f1-a56d-b37b9d562e3b
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 48}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: da48851f-d36e-4c44-8694-488a37caefa6
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 54}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: de48e917-006d-47da-8289-e9ee728e61c9
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 60}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  startPieceModel:
+    id: 82e6076c-a40b-4219-872c-8ab78cadbe88
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  endPieceModel:
+    id: 82e6076c-a40b-4219-872c-8ab78cadbe88
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}

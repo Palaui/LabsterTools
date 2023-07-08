@@ -268,6 +268,7 @@ public class TrackManager : EditorWindow
             selectedPiece = null;
             RefreshGrid();
             Load();
+            EditorUtility.SetDirty(trackObjectField.value as TrackScriptable);
         };
 
         Selection.objects = new Object[] { currentPieceGhost };
@@ -318,5 +319,6 @@ public class TrackManager : EditorWindow
         // Get Data scriptable
         DataScriptable data = AssetDatabase.LoadAssetAtPath<DataScriptable>(DATA_PATH);
         data.UpdateTracks(tracks);
+        EditorUtility.SetDirty(data);
     }
 }

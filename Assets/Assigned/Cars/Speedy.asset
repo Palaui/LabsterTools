@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Speedy
   m_EditorClassIdentifier: 
   prefab: {fileID: 8263479777806101192, guid: 8410911333bd4f746ac00ecdcc4a3562, type: 3}
-  acceleration: 0
-  maxSpeed: 0
-  turnSpeed: 0
-  grip: 0
-  riskAcceleration: 0
+  color: {r: 0.15566039, g: 0.48190957, b: 1, a: 1}
+  acceleration: 20
+  maxSpeed: 100
+  turnSpeed: 80
+  grip: 80
+  riskAcceleration: 2
