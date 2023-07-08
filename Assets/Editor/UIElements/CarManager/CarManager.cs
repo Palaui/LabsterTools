@@ -3,9 +3,11 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
+using System.Collections.Generic;
 
 public class CarManager : EditorWindow
 {
+    private const string DATA_PATH = "Assets/Assigned/Data.asset";
     private const string CARS_PATH = "Assets/Assigned/Cars/";
 
     private GameObject currentCarGhost = null;
@@ -46,6 +48,7 @@ public class CarManager : EditorWindow
         CreateNewCarlements();
 
         root.Add(mainGroup);
+        UpdateAllCars();
     }
 
 
@@ -204,6 +207,7 @@ public class CarManager : EditorWindow
         root.Add(mainGroup);
 
         CreateCarGroup();
+        UpdateAllCars();
     }
 
     private FloatField SetFloatField(string label, string tooltip, float value, Action<float> onChangeAction)
@@ -241,5 +245,20 @@ public class CarManager : EditorWindow
     {
         if (currentCarGhost != null)
             DestroyImmediate(currentCarGhost);
+    }
+
+    private void UpdateAllCars()
+    {
+        List<CarScriptable> cars = new List<CarScriptable>();
+        string[] guids = AssetDatabase.FindAssets($"t:{typeof(CarScriptable).Name}", new string[] { CARS_PATH });
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            cars.Add(AssetDatabase.LoadAssetAtPath<CarScriptable>(path));
+        }
+
+        // Get Data scriptable
+        DataScriptable data = AssetDatabase.LoadAssetAtPath<DataScriptable>(DATA_PATH);
+        data.UpdateCars(cars);
     }
 }

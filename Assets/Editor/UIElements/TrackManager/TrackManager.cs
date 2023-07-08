@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class TrackManager : EditorWindow
 {
+    private const string DATA_PATH = "Assets/Assigned/Data.asset";
     private const string TRACKS_PATH = "Assets/Assigned/Tracks/";
     private const string TRACK_PIECES_PATH = "Assets/Assigned/TrackPieces/";
 
@@ -50,6 +51,7 @@ public class TrackManager : EditorWindow
         CreateNewTracklements();
 
         root.Add(mainGroup);
+        UpdateAllTracks();
     }
 
 
@@ -136,7 +138,7 @@ public class TrackManager : EditorWindow
         piecesGrid.style.alignItems = Align.FlexStart;
         piecesGrid.style.justifyContent = Justify.FlexStart;
 
-        string[] assets = AssetDatabase.FindAssets($"t:{typeof(TrackPieceScriptable).Name}", new[] { TRACK_PIECES_PATH });
+        string[] assets = AssetDatabase.FindAssets($"t:{typeof(TrackPieceScriptable).Name}", new string[] { TRACK_PIECES_PATH });
         foreach (string id in assets)
         {
             TrackPieceScriptable trackPiece = AssetDatabase.LoadAssetAtPath<TrackPieceScriptable>(AssetDatabase.GUIDToAssetPath(id));
@@ -252,6 +254,7 @@ public class TrackManager : EditorWindow
         root.Add(mainGroup);
 
         RefreshGrid();
+        UpdateAllTracks();
     }
 
     private void InstantiateGhost()
@@ -300,5 +303,20 @@ public class TrackManager : EditorWindow
             TrackPieceElement element = spawnedPiece.AddComponent<TrackPieceElement>();
             element.Initialize(track, model);
         }
+    }
+
+    private void UpdateAllTracks()
+    {
+        List<TrackScriptable> tracks = new List<TrackScriptable>();
+        string[] guids = AssetDatabase.FindAssets($"t:{typeof(TrackScriptable).Name}", new string[] { TRACKS_PATH });
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            tracks.Add(AssetDatabase.LoadAssetAtPath<TrackScriptable>(path));
+        }
+
+        // Get Data scriptable
+        DataScriptable data = AssetDatabase.LoadAssetAtPath<DataScriptable>(DATA_PATH);
+        data.UpdateTracks(tracks);
     }
 }
