@@ -16,12 +16,20 @@ public class TrackManager : EditorWindow
     private ObjectField trackObjectField;
     private GroupBox piecesGrid;
 
+    private TrackPiece selectedPiece = null;
+    private GameObject currentPieceGhost = null;
+
 
     [MenuItem("Labster/TrackManager")]
     public static void ShowExample()
     {
         TrackManager wnd = GetWindow<TrackManager>();
         wnd.titleContent = new GUIContent("TrackManager");
+    }
+
+    private void OnDisable()
+    {
+        DestroyGhost();
     }
 
     public void CreateGUI()
@@ -99,8 +107,9 @@ public class TrackManager : EditorWindow
         refreshButton.style.right = 0;
         refreshButton.clicked += () =>
         {
-            mainGroup.Remove(piecesGrid);
-            CreateTrackPiecesGrid();
+            selectedPiece = null;
+            DestroyGhost();
+            RefreshGrid();
         };
 
         mainGroup.Add(refreshButton);
@@ -135,9 +144,19 @@ public class TrackManager : EditorWindow
 
             if (trackPiece.IsCorrectlySet)
             {
-                image.style.backgroundColor = Color.black;
+                image.style.backgroundColor = selectedPiece && selectedPiece.name == trackPiece.name ? Color.green : Color.black;
                 image.image = AssetPreview.GetAssetPreview(trackPiece.Icon);
                 image.tooltip = trackPiece.name;
+
+                image.RegisterCallback<MouseDownEvent>((evt) =>
+                {
+                    if (evt.button == 0)
+                    {
+                        selectedPiece = trackPiece;
+                        InstantiateGhost();
+                        RefreshGrid();
+                    }
+                });
             }
             else
             {
@@ -146,8 +165,14 @@ public class TrackManager : EditorWindow
             }
             piecesGrid.Add(image);
         }
-        
+
         mainGroup.Add(piecesGrid);
+    }
+
+    private void RefreshGrid()
+    {
+        mainGroup.Remove(piecesGrid);
+        CreateTrackPiecesGrid();
     }
 
     private void CreateNewTrackGroup()
@@ -172,10 +197,7 @@ public class TrackManager : EditorWindow
         textField.maxLength = 50;
         textField.RegisterValueChangedCallback((evt) =>
         {
-            if (evt.newValue.Length == 0)
-                label.text = "The name of the track cannot be empty.";
-            else
-                label.text = "";
+            label.text = evt.newValue.Length == 0 ? "The name of the track cannot be empty." : "";
         });
 
         Button acceptButton = new Button();
@@ -217,5 +239,18 @@ public class TrackManager : EditorWindow
         trackObjectField.value = track;
         root.Remove(newTrackGroup);
         root.Add(mainGroup);
+    }
+
+    private void InstantiateGhost()
+    {
+        DestroyGhost();
+        currentPieceGhost = Instantiate(selectedPiece.Prefab);
+        Selection.objects = new Object[] { currentPieceGhost };
+    }
+
+    private void DestroyGhost()
+    {
+        if (currentPieceGhost != null)
+            DestroyImmediate(currentPieceGhost);
     }
 }

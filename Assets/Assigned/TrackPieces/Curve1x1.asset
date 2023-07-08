@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Curve1x1
   m_EditorClassIdentifier: 
   prefab: {fileID: 2055570696707289952, guid: e179a054b13931a4cb0159ec5ea0b163, type: 3}
-  icon: {fileID: 21300000, guid: 9ddedf9bae386724db8f2a6ab0db13b4, type: 3}
+  icon: {fileID: 21300000, guid: b3abb78d9f1041d4bb6e0f7535ae5188, type: 3}
