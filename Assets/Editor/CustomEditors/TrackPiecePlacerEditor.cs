@@ -21,6 +21,9 @@ public class TrackPiecePlacerEditor :Editor
         if (GUILayout.Button("Snap To Grid"))
             script.SetOnGrid();
 
+        if (GUILayout.Button("Cancel"))
+            script.Cancel();
+
         if (GUILayout.Button("Add To Track"))
             script.AddToTrack();
 

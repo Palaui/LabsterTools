@@ -1,4 +1,7 @@
+#if UNITY_EDITOR
+
 using System;
+using UnityEditor;
 using UnityEngine;
 
 public class TrackPieceElement : MonoBehaviour
@@ -18,16 +21,12 @@ public class TrackPieceElement : MonoBehaviour
 
     public void SetOnGrid()
     {
-        Vector3 pos = transform.position / EditorConstants.GRID_SIZE;
-        transform.position = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), Mathf.Round(pos.z)) * EditorConstants.GRID_SIZE;
-        Vector3 euler = transform.eulerAngles / EditorConstants.RECT;
-        euler.y = Mathf.Round(euler.y) * EditorConstants.RECT;
-        transform.eulerAngles = euler;
+        transform.SetOnGrid();
     }
 
     public void Modify()
     {
-        if (!IsOnGrid())
+        if (!transform.IsOnGrid())
         {
             Alerted?.Invoke(this, EditorConstants.ON_GRID_AUTO);
             SetOnGrid();
@@ -41,6 +40,8 @@ public class TrackPieceElement : MonoBehaviour
         }
 
         track.ModifyPiece(model);
+        Alerted?.Invoke(this, "");
+        Selection.objects = new UnityEngine.Object[] { };
     }
 
     public void Delete()
@@ -54,13 +55,6 @@ public class TrackPieceElement : MonoBehaviour
         track.RemovePiece(model);
         DestroyImmediate(gameObject);
     }
-
-
-    private bool IsOnGrid()
-    {
-        Vector3 pos = transform.position / EditorConstants.GRID_SIZE;
-        return Mathf.Abs(pos.x - Mathf.Round(pos.x)) < EditorConstants.EPSILON && 
-            Mathf.Abs(pos.y - Mathf.Round(pos.y)) < EditorConstants.EPSILON && 
-            Mathf.Abs(pos.z - Mathf.Round(pos.z)) < EditorConstants.EPSILON;
-    }
 }
+
+#endif

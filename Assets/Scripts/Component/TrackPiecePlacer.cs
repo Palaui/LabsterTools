@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System;
 using UnityEngine;
 
@@ -19,16 +21,18 @@ public class TrackPiecePlacer : MonoBehaviour
 
     public void SetOnGrid()
     {
-        Vector3 pos = transform.position / EditorConstants.GRID_SIZE;
-        transform.position = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y), Mathf.Round(pos.z)) * EditorConstants.GRID_SIZE;
-        Vector3 euler = transform.eulerAngles / EditorConstants.RECT;
-        euler.y = Mathf.Round(euler.y) * EditorConstants.RECT;
-        transform.eulerAngles = euler;
+        transform.SetOnGrid();
+    }
+
+    public void Cancel()
+    {
+        Completed?.Invoke(this, EventArgs.Empty);
+        Completed = null;
     }
 
     public void AddToTrack()
     {
-        if (!IsOnGrid())
+        if (!transform.IsOnGrid())
         {
             Alerted?.Invoke(this, EditorConstants.ON_GRID_AUTO);
             SetOnGrid();
@@ -48,17 +52,11 @@ public class TrackPiecePlacer : MonoBehaviour
         Completed = null;
     }
 
-
-    private bool IsOnGrid()
-    {
-        Vector3 pos = transform.position / EditorConstants.GRID_SIZE;
-        return Mathf.Abs(pos.x - Mathf.Round(pos.x)) < EditorConstants.EPSILON &&
-            Mathf.Abs(pos.y - Mathf.Round(pos.y)) < EditorConstants.EPSILON && 
-            Mathf.Abs(pos.z - Mathf.Round(pos.z)) < EditorConstants.EPSILON;
-    }
-
     private void OnDestroy()
     {
         Completed?.Invoke(this, EventArgs.Empty);
     }
 }
+
+
+#endif
