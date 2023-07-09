@@ -11,6 +11,8 @@ public class TrackScriptable : ScriptableObject
 
 
     public IReadOnlyList<TrackPieceModel> PieceModels => pieceModels;
+    public TrackPieceModel StartPieceModel => startPieceModel;
+    public TrackPieceModel EndPieceModel => endPieceModel;
 
 
 #if UNITY_EDITOR

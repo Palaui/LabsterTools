@@ -19,6 +19,8 @@ public class TrackPieceElementEditor : Editor
     {
         DrawDefaultInspector();
 
+        EditorGUILayout.LabelField("ID", script.Id);
+
         if (GUILayout.Button("Modify"))
             script.Modify();
 

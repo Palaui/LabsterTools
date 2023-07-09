@@ -10,8 +10,13 @@ public class TrackPieceElement : MonoBehaviour
 
     private TrackScriptable track;
     private TrackPieceModel model;
+    private string id;
 
 
+    public string Id => id;
+
+
+    public EventHandler Modified;
     public EventHandler<string> Alerted;
 
 
@@ -19,6 +24,7 @@ public class TrackPieceElement : MonoBehaviour
     {
         this.track = track;
         this.model = model;
+        id = model.id;
     }
 
     public void SetOnGrid()
@@ -42,8 +48,10 @@ public class TrackPieceElement : MonoBehaviour
         }
 
         track.ModifyPiece(model, flag);
+        Modified?.Invoke(this, EventArgs.Empty);
         Alerted?.Invoke(this, "");
         Selection.objects = new UnityEngine.Object[] { };
+
     }
 
     public void Delete()

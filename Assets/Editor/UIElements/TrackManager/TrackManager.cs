@@ -11,6 +11,10 @@ public class TrackManager : EditorWindow
     private const string TRACKS_PATH = "Assets/Assigned/Tracks/";
     private const string TRACK_PIECES_PATH = "Assets/Assigned/TrackPieces/";
 
+    private Material startMaterial;
+    private Material endMaterial;
+    private Material trackMaterial;
+
     private List<GameObject> loadedPieces = new List<GameObject>();
     private GameObject currentPieceGhost = null;
 
@@ -38,6 +42,10 @@ public class TrackManager : EditorWindow
 
     public void CreateGUI()
     {
+        startMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Assigned/Materials/TrackStartMaterial.mat");
+        endMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Assigned/Materials/TrackEndMaterial.mat");
+        trackMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Assigned/Materials/TrackMaterial.mat");
+
         minSize = new Vector2(500, 200);
 
         root = rootVisualElement;
@@ -303,6 +311,18 @@ public class TrackManager : EditorWindow
             loadedPieces.Add(spawnedPiece);
             TrackPieceElement element = spawnedPiece.AddComponent<TrackPieceElement>();
             element.Initialize(track, model);
+            element.Modified += (_, _) =>
+            {
+                EditorUtility.SetDirty(track);
+                Load();
+            };
+
+            if (model.id == track.StartPieceModel.id)
+                spawnedPiece.GetComponent<Renderer>().material = startMaterial;
+            else if (model.id == track.EndPieceModel.id)
+                spawnedPiece.GetComponent<Renderer>().material = endMaterial;
+            else
+                spawnedPiece.GetComponent<Renderer>().material = trackMaterial;
         }
     }
 

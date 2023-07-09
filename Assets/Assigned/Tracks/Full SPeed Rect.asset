@@ -63,7 +63,7 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
   endPieceModel:
-    id: 82e6076c-a40b-4219-872c-8ab78cadbe88
+    id: de48e917-006d-47da-8289-e9ee728e61c9
     piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
-    position: {x: 0, y: 0, z: 0}
+    position: {x: 0, y: 0, z: 60}
     rotation: {x: 0, y: 0, z: 0, w: 1}
