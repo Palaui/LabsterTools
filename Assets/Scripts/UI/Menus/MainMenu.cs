@@ -66,6 +66,10 @@ public class MainMenu : MonoBehaviour
 
     private void OnPlayPressed()
     {
+        if (!selectedTrack || !selectedCar)
+            return;
+
+        race.Play(selectedCar);
         gameObject.SetActive(false);
     }
 }
