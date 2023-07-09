@@ -214,11 +214,21 @@ public class TrackPieceManagerElement : BaseManager
 
         currentPieceGhost = Object.Instantiate(piece.Prefab);
         Selection.objects = new Object[] { currentPieceGhost };
+
+        MoveSceneViewCamera();
     }
 
     private void DestroyGhost()
     {
         if (currentPieceGhost != null)
             Object.DestroyImmediate(currentPieceGhost);
+    }
+
+    private void MoveSceneViewCamera()
+    {
+        SceneView.lastActiveSceneView.pivot = Vector3.zero;
+        SceneView.lastActiveSceneView.rotation = Quaternion.Euler(35, 120, 0);
+        SceneView.lastActiveSceneView.size = 6;
+        SceneView.lastActiveSceneView.Repaint();
     }
 }

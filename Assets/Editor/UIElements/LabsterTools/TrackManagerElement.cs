@@ -14,9 +14,11 @@ public class TrackManagerElement : BaseManager
     private Material startMaterial;
     private Material endMaterial;
     private Material trackMaterial;
+    private Material trackGhostMaterial;
 
     private List<GameObject> loadedPieces = new List<GameObject>();
     private GameObject currentPieceGhost = null;
+    private Vector3 lastCompletePosition = Vector3.zero;
 
     private VisualElement root;
     private GroupBox mainGroup;
@@ -30,6 +32,7 @@ public class TrackManagerElement : BaseManager
 
     public override void Disable()
     {
+        lastCompletePosition = Vector3.zero;
         selectedPiece = null;
         DestroyGhost();
         RefreshGrid();
@@ -42,6 +45,7 @@ public class TrackManagerElement : BaseManager
         startMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Assigned/Materials/TrackStartMaterial.mat");
         endMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Assigned/Materials/TrackEndMaterial.mat");
         trackMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Assigned/Materials/TrackMaterial.mat");
+        trackGhostMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Assigned/Materials/TrackGhostMaterial.mat");
 
         this.root = root;
 
@@ -264,11 +268,16 @@ public class TrackManagerElement : BaseManager
     private void InstantiateGhost()
     {
         DestroyGhost();
+
         currentPieceGhost = Object.Instantiate(selectedPiece.Prefab);
+        currentPieceGhost.transform.position = lastCompletePosition + Vector3.up;
+        currentPieceGhost.GetComponent<Renderer>().material = trackGhostMaterial;
+
         TrackPiecePlacer placer = currentPieceGhost.AddComponent<TrackPiecePlacer>();
         placer.Initialize(trackObjectField.value as TrackScriptable, selectedPiece);
         placer.Completed += (_, _) =>
         {
+            lastCompletePosition = placer.transform.position;
             selectedPiece = null;
             RefreshGrid();
             Load();
@@ -276,6 +285,8 @@ public class TrackManagerElement : BaseManager
         };
 
         Selection.objects = new Object[] { currentPieceGhost };
+
+        MoveSceneViewCamera();
     }
 
     private void DestroyGhost()
@@ -336,5 +347,13 @@ public class TrackManagerElement : BaseManager
         DataScriptable data = AssetDatabase.LoadAssetAtPath<DataScriptable>(DATA_PATH);
         data.UpdateTracks(tracks);
         EditorUtility.SetDirty(data);
+    }
+
+    private void MoveSceneViewCamera()
+    {
+        SceneView.lastActiveSceneView.pivot = currentPieceGhost.transform.position;
+        SceneView.lastActiveSceneView.rotation = Quaternion.Euler(35, 120, 0);
+        SceneView.lastActiveSceneView.size = 6;
+        SceneView.lastActiveSceneView.Repaint();
     }
 }
