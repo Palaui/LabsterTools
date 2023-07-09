@@ -57,13 +57,17 @@ MonoBehaviour:
     piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
     position: {x: 0, y: 0, z: 60}
     rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: ba7a1f6b-d9f6-4ce6-9801-843784a95866
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 66}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
   startPieceModel:
     id: 82e6076c-a40b-4219-872c-8ab78cadbe88
     piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
   endPieceModel:
-    id: de48e917-006d-47da-8289-e9ee728e61c9
+    id: ba7a1f6b-d9f6-4ce6-9801-843784a95866
     piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
-    position: {x: 0, y: 0, z: 60}
+    position: {x: 0, y: 0, z: 66}
     rotation: {x: 0, y: 0, z: 0, w: 1}

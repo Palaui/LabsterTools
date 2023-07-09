@@ -226,6 +226,7 @@ public class CarManagerElement : BaseManager
         ChangeGhostColor();
 
         Selection.objects = new UnityEngine.Object[] { currentCarGhost };
+        MoveSceneViewCamera();
     }
 
     private void ChangeGhostColor()
@@ -260,9 +261,9 @@ public class CarManagerElement : BaseManager
 
     private void MoveSceneViewCamera()
     {
-        Vector3 position = SceneView.lastActiveSceneView.pivot;
-        position.z -= 10.0f;
-        SceneView.lastActiveSceneView.pivot = position;
+        SceneView.lastActiveSceneView.pivot = Vector3.zero;
+        SceneView.lastActiveSceneView.rotation = Quaternion.Euler(35, 120, 0);
+        SceneView.lastActiveSceneView.size = 3;
         SceneView.lastActiveSceneView.Repaint();
     }
 }
