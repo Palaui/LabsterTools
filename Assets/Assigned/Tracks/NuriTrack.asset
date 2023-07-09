@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b789c98c02a644e8f3dcd44c06f554, type: 3}
+  m_Name: NuriTrack
+  m_EditorClassIdentifier: 
+  pieceModels:
+  - id: 9e02597e-3fcc-4284-9e3a-27415fd41fc7
+    piece: {fileID: 11400000, guid: 96cb3d26306174748bae7f78e3c61450, type: 2}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: 6072bbcd-84a5-46dc-9cff-ce306ef3e24a
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: -6, y: 0, z: 0}
+    rotation: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
+  startPieceModel:
+    id: 9e02597e-3fcc-4284-9e3a-27415fd41fc7
+    piece: {fileID: 11400000, guid: 96cb3d26306174748bae7f78e3c61450, type: 2}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  endPieceModel:
+    id: 9e02597e-3fcc-4284-9e3a-27415fd41fc7
+    piece: {fileID: 11400000, guid: 96cb3d26306174748bae7f78e3c61450, type: 2}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}

@@ -4,7 +4,6 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
 using System.Collections.Generic;
-using UnityEngine.Playables;
 
 public class CarManager : EditorWindow
 {
@@ -25,7 +24,7 @@ public class CarManager : EditorWindow
     public static void ShowWindow()
     {
         CarManager window = GetWindow<CarManager>();
-        window.titleContent = new GUIContent("CarManager");
+        window.titleContent = new GUIContent("Car Manager");
     }
 
     private void OnDisable()
@@ -263,5 +262,13 @@ public class CarManager : EditorWindow
         DataScriptable data = AssetDatabase.LoadAssetAtPath<DataScriptable>(DATA_PATH);
         data.UpdateCars(cars);
         EditorUtility.SetDirty(data);
+    }
+
+    private void MoveSceneViewCamera()
+    {
+        Vector3 position = SceneView.lastActiveSceneView.pivot;
+        position.z -= 10.0f;
+        SceneView.lastActiveSceneView.pivot = position;
+        SceneView.lastActiveSceneView.Repaint();
     }
 }

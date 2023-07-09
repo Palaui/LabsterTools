@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tracks:
   - {fileID: 11400000, guid: c9744a865c67fab4781f93b44ad5250a, type: 2}
-  - {fileID: 11400000, guid: 25e17b9a11ad151409a9d4382f88f0ab, type: 2}
+  - {fileID: 11400000, guid: 3681e27ea591e9b4d9eb34a381c3f86d, type: 2}
   - {fileID: 11400000, guid: 642a9aed17bace344a33f09fa16a7e3f, type: 2}
   cars:
+  - {fileID: 11400000, guid: c553a54c7d86993448067240eac7d99d, type: 2}
   - {fileID: 11400000, guid: 7b4086dbcf9f4bd4284589e4d18b486d, type: 2}
   - {fileID: 11400000, guid: b4bbb666187298c41958d87d45ca9c29, type: 2}

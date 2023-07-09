@@ -9,6 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75b789c98c02a644e8f3dcd44c06f554, type: 3}
-  m_Name: Nuri Track
+  m_Script: {fileID: 11500000, guid: 23a2198198db0dd43b74111e2f1c4ae7, type: 3}
+  m_Name: RectBump1x1
   m_EditorClassIdentifier: 
+  prefab: {fileID: 6226204691688691157, guid: 4e00852b874e5924fac2d4066bae8e76, type: 3}
+  icon: {fileID: 21300000, guid: 27e2766321755e54b89c2fd1ad73e661, type: 3}

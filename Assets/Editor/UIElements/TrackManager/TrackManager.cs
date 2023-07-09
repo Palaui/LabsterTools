@@ -28,7 +28,7 @@ public class TrackManager : EditorWindow
     public static void ShowWindow()
     {
         TrackManager window = GetWindow<TrackManager>();
-        window.titleContent = new GUIContent("TrackManager");
+        window.titleContent = new GUIContent("Track Manager");
     }
 
     private void OnDisable()

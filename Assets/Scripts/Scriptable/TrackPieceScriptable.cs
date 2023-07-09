@@ -7,8 +7,16 @@ public class TrackPieceScriptable : ScriptableObject
     [SerializeField] private Sprite icon;
     
 
-    public GameObject Prefab => prefab;
-    public Sprite Icon => icon;
+    public GameObject Prefab
+    {
+        get => prefab;
+        set { if (Application.isEditor) prefab = value; }
+    }
+    public Sprite Icon
+    {
+        get => icon;
+        set { if (Application.isEditor) icon = value; }
+    }
 
     public bool IsCorrectlySet => prefab != null && icon != null;
 }
