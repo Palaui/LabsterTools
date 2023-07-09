@@ -61,17 +61,17 @@ MonoBehaviour:
     piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
     position: {x: 0, y: 0, z: 66}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-  - id: 28eac490-349c-4076-a25d-77cb75a4e7bd
-    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
-    position: {x: 0, y: 0, z: 72}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - id: 4251c5ac-3d0e-4c49-8f98-f5c0cee5cb95
-    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
-    position: {x: 0, y: 0, z: 78}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
   - id: 58076843-288d-4e2c-b164-6eec46f9405d
     piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
     position: {x: 0, y: 0, z: 84}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: 783e16ef-fece-4df7-84c7-77b419b9bf8f
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 72}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: 87593a9e-772f-415a-aacc-6fdf61b90aba
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 78}
     rotation: {x: 0, y: 0, z: 0, w: 1}
   startPieceModel:
     id: 82e6076c-a40b-4219-872c-8ab78cadbe88

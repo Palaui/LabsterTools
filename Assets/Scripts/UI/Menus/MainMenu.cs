@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     private const string SELECTED_CAR = "Selected Car";
     private const string PREFERRED_CAR = "Preferred Car";
 
+    [SerializeField] private Race race;
     [SerializeField] private DataScriptable data;
     [SerializeField] private CarEntryWidget carEntryWidgetPrefab;
     [SerializeField] private TrackEntryWidget trackEntryWidgetPrefab;
@@ -60,6 +61,7 @@ public class MainMenu : MonoBehaviour
     {
         selectedTrack = track;
         preferredCarText.text = $"{PREFERRED_CAR}: {track.name}";
+        race.LoadTrack(track);
     }
 
     private void OnPlayPressed()

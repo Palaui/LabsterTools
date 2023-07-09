@@ -15,6 +15,11 @@ public class TrackScriptable : ScriptableObject
     public TrackPieceModel EndPieceModel => endPieceModel;
 
 
+    public bool ContainsPieceAt(Vector3 position)
+    {
+        return pieceModels.Any(entry => entry.position == position);
+    }
+
 #if UNITY_EDITOR
 
     public void AddPiece(TrackPieceModel model)
