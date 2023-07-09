@@ -77,7 +77,7 @@ public class CarManagerElement : BaseManager
 
         carObjectField = new ObjectField();
         carObjectField.objectType = typeof(CarScriptable);
-        carObjectField.style.maxWidth = 300;
+        carObjectField.style.width = 400;
         carObjectField.label = "Car";
         carObjectField.tooltip = "Drag or select the car you want to work on.";
         carObjectField.RegisterValueChangedCallback((evt) =>
@@ -113,11 +113,16 @@ public class CarManagerElement : BaseManager
         carGroup.style.justifyContent = Justify.Center;
 
         CarScriptable car = (CarScriptable)carObjectField.value;
-        carGroup.Add(SetFloatField("Acceleration", "Increase of the speed of the car", car.Acceleration, (float value) => { car.Acceleration = value; }));
-        carGroup.Add(SetFloatField("Max Speed", "Maximum speed of the car", car.MaxSpeed, (float value) => { car.MaxSpeed = value; }));
-        carGroup.Add(SetFloatField("Turn Speed", "Speed of rotation of the car", car.TurnSpeed, (float value) => { car.TurnSpeed = value; }));
-        carGroup.Add(SetFloatField("Grip", "How much speed can the car maintain when turning", car.Grip, (float value) => { car.Grip = value; }));
-        carGroup.Add(SetFloatField("Risk Acceleration", "Acceleration when the car is on the edges", car.RiskAcceleration, (float value) => { car.RiskAcceleration = value; }));
+        carGroup.Add(SetSlider("Acceleration", "Increase of the speed of the car", EditorConstants.CAR_MIN_ACCELERATION, EditorConstants.CAR_MAX_ACCELERATION, 
+            car.Acceleration, (float value) => { car.Acceleration = value; }));
+        carGroup.Add(SetSlider("Max Speed", "Maximum speed of the car", EditorConstants.CAR_MIN_MAX_SPEED, EditorConstants.CAR_MAX_MAX_SPEED,
+            car.MaxSpeed, (float value) => { car.MaxSpeed = value; }));
+        carGroup.Add(SetSlider("Turn Speed", "Speed of rotation of the car", EditorConstants.CAR_MIN_TURN_SPEED, EditorConstants.CAR_MAX_TURN_SPEED,
+            car.TurnSpeed, (float value) => { car.TurnSpeed = value; }));
+        carGroup.Add(SetSlider("Grip", "How much speed can the car maintain when turning", EditorConstants.CAR_MIN_GRIP, EditorConstants.CAR_MAX_GRIP,
+            car.Grip, (float value) => { car.Grip = value; }));
+        carGroup.Add(SetSlider("Risk Acceleration", "Acceleration when the car is on the edges", EditorConstants.CAR_MIN_RISK_ACCELERATION, EditorConstants.CAR_MAX_RISK_ACCELERATION,
+            car.RiskAcceleration, (float value) => { car.RiskAcceleration = value; }));
 
         ColorField colorField = new ColorField();
         colorField.label = "Color";
@@ -150,7 +155,7 @@ public class CarManagerElement : BaseManager
         label.style.color = Color.red;
 
         TextField textField = new TextField();
-        textField.style.maxWidth = 300;
+        textField.style.width = 400;
         textField.label = "New car name";
         textField.tooltip = "Enter the name of the new car.";
         textField.value = "New Car";
@@ -204,19 +209,20 @@ public class CarManagerElement : BaseManager
         UpdateAllCars();
     }
 
-    private FloatField SetFloatField(string label, string tooltip, float value, Action<float> onChangeAction)
+    private Slider SetSlider(string label, string tooltip, float min, float max, float value, Action<float> onChangeAction)
     {
-        FloatField accelerationField = new FloatField();
-        accelerationField.style.maxWidth = 300;
-        accelerationField.label = label;
-        accelerationField.tooltip = tooltip;
-        accelerationField.value = value;
-        accelerationField.RegisterCallback<ChangeEvent<float>>((evt) =>
+        // Add a float field that uses a range slider to edit the value
+        Slider field = new Slider(label, min, max);
+        field.style.width = 400;
+        field.showInputField = true;
+        field.tooltip = tooltip;
+        field.value = value;
+        field.RegisterCallback<ChangeEvent<float>>((evt) =>
         {
             onChangeAction(evt.newValue);
             EditorUtility.SetDirty(carObjectField.value as CarScriptable);
         });
-        return accelerationField;
+        return field;
     }
 
     private void InstantiateGhost()
