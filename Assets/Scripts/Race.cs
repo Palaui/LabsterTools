@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Race : MonoBehaviour
 {
+    private const float RISK_THRESHOLD = 0.1f;
     private const float PREVIEW_DISTANCE_MULTIPLIER = 1.5f;
     private const float DISTANCE_TO_FINISH_THRESHOLD = 2.5f;
 
@@ -15,6 +16,7 @@ public class Race : MonoBehaviour
 
     private CarScriptable car;
     private GameObject carObject;
+    private PrometeoCarController controller;
 
     private float angle = 0;
     private float startTime;
@@ -76,7 +78,14 @@ public class Race : MonoBehaviour
 
         carObject = Instantiate(car.Prefab);
         carObject.transform.SetPositionAndRotation(track.StartPieceModel.position, track.StartPieceModel.rotation);
-        carObject.GetComponent<PrometeoCarController>().bodyRenderer.material.color = car.Color;
+        controller = carObject.GetComponent<PrometeoCarController>();
+        controller.bodyRenderer.material.color = car.Color;
+        controller.accelerationMultiplier = Mathf.RoundToInt(car.Acceleration);
+        controller.maxSpeed = Mathf.RoundToInt(car.MaxSpeed);
+        controller.steeringSpeed = car.TurnSpeed;
+        controller.handbrakeDriftMultiplier = Mathf.RoundToInt(EditorConstants.CAR_MAX_GRIP - car.Grip);
+        controller.enabled = false;
+
 
         carObject.transform.LookAt(analisys.stepPositions[1]);
         carObject.transform.position += 0.75f * Vector3.up;
@@ -86,6 +95,7 @@ public class Race : MonoBehaviour
     {
         isPlaying = true;
         startTime = Time.realtimeSinceStartup;
+        controller.enabled = true;
     }
 
     public void Stop()
@@ -108,7 +118,8 @@ public class Race : MonoBehaviour
 
         if (isPlaying)
         {
-            TimeChanged?.Invoke(this, Time.realtimeSinceStartup - startTime);
+            float time = Time.realtimeSinceStartup - startTime;
+            TimeChanged?.Invoke(this, time);
 
             cam.SetPositionAndRotation(carObject.transform.position, carObject.transform.rotation);
             cam.localEulerAngles = new Vector3(35, cam.eulerAngles.y, 0);
@@ -120,8 +131,21 @@ public class Race : MonoBehaviour
             if (Vector3.Distance(carObject.transform.position, track.EndPieceModel.position) < DISTANCE_TO_FINISH_THRESHOLD)
             {
                 RaceFinished?.Invoke(this, EventArgs.Empty);
-                PlayerPrefs.SetFloat(track.name, Time.realtimeSinceStartup);
+
+                if (!PlayerPrefs.HasKey(track.name))
+                    PlayerPrefs.SetFloat(track.name, time);
+                else if (PlayerPrefs.GetFloat(track.name) > time)
+                    PlayerPrefs.SetFloat(track.name, time);
             }
+
+            // Risk management
+            if (Mathf.Abs((controller.frontLeftMesh.transform.position.y + controller.rearLeftMesh.transform.position.y) / 2 -
+                (controller.frontRightMesh.transform.position.y + controller.rearRightMesh.transform.position.y) / 2) > RISK_THRESHOLD)
+            {
+                controller.accelerationMultiplier = Mathf.RoundToInt(car.Acceleration + car.RiskAcceleration);
+            }
+            else
+                controller.accelerationMultiplier = Mathf.RoundToInt(car.Acceleration);
         }
     }
 }

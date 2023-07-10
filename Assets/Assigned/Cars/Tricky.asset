@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7330210485505926631, guid: 2adc55438dbc9e348adc90885c5c71c1, type: 3}
   color: {r: 0.8113208, g: 0.14159843, b: 0.58793366, a: 1}
-  acceleration: 17.5
-  maxSpeed: 93.5
-  turnSpeed: 92
-  grip: 83.3
-  riskAcceleration: 7.99
+  acceleration: 9
+  maxSpeed: 120
+  turnSpeed: 0.4
+  grip: 2
+  riskAcceleration: 9
