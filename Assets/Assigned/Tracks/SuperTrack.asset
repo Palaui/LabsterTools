@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b789c98c02a644e8f3dcd44c06f554, type: 3}
+  m_Name: SuperTrack
+  m_EditorClassIdentifier: 
+  pieceModels:
+  - id: 220a5c21-14b8-406b-8c75-a5b864ed48e1
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: d9482944-7920-46fe-b31e-85143e93bf26
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 6}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: a1c9e107-0b70-4643-8143-0eeb92982067
+    piece: {fileID: 11400000, guid: 96cb3d26306174748bae7f78e3c61450, type: 2}
+    position: {x: 0, y: 0, z: 18}
+    rotation: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
+  - id: dded64c9-aae5-45d2-9c41-b4f459bb3130
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 6, y: 0, z: 18}
+    rotation: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
+  - id: f03725ac-9ed1-4f91-8f2e-4d2c02cc711d
+    piece: {fileID: 11400000, guid: 96cb3d26306174748bae7f78e3c61450, type: 2}
+    position: {x: 12, y: 0, z: 18}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: 6d423dfd-1afb-46fd-8fa9-fc6557efb828
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 12, y: 0, z: 12}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: f74adc0c-6c2f-4511-b06b-7bd7e6bc9b6c
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: -0, y: 0, z: 12}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  startPieceModel:
+    id: 220a5c21-14b8-406b-8c75-a5b864ed48e1
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  endPieceModel:
+    id: 6d423dfd-1afb-46fd-8fa9-fc6557efb828
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 12, y: 0, z: 12}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
