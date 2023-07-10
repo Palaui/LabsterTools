@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private Transform carsLayout;
     [SerializeField] private Transform tracksLayout;
+    [SerializeField] private CarDataWidget carDataWidget;
 
     [SerializeField] private TextMeshProUGUI selectedCarText;
     [SerializeField] private TextMeshProUGUI preferredCarText;
@@ -57,6 +58,7 @@ public class MainMenu : MonoBehaviour
         backButton.onClick.AddListener(OnBackPressed);
 
         race.TimeChanged += ShowCurrentTime;
+        carDataWidget.Set(null);
     }
 
     private void OnCarPressed(object sender, CarScriptable car)
@@ -64,6 +66,7 @@ public class MainMenu : MonoBehaviour
         selectedCar = car;
         selectedCarText.text = $"{SELECTED_CAR}: {car.name}";
         race.LoadCar(car);
+        carDataWidget.Set(car);
     }
 
     private void OnTrackPressed(object sender, TrackScriptable track)
