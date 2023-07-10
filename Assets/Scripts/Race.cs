@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public class Race : MonoBehaviour
 {
+    private const float PREVIEW_DISTANCE_MULTIPLIER = 1.5f;
+    private const float DISTANCE_TO_FINISH_THRESHOLD = 2.5f;
+
     private List<GameObject> loadedPieces = new List<GameObject>();
 
     private TrackScriptable track;
@@ -12,14 +16,19 @@ public class Race : MonoBehaviour
     private CarScriptable car;
     private GameObject carObject;
 
+    private float angle = 0;
+    private float startTime;
+    private bool isPlaying = false;
+
     [SerializeField] private Material startMaterial;
     [SerializeField] private Material endMaterial;
     [SerializeField] private Material trackMaterial;
 
     [SerializeField] private Transform cam;
 
-    private float angle = 0;
-    private bool isPlaying = false;
+
+    public EventHandler<float> TimeChanged;
+    public EventHandler RaceFinished;
 
 
     public void LoadTrack(TrackScriptable track)
@@ -27,6 +36,9 @@ public class Race : MonoBehaviour
         foreach (GameObject piece in loadedPieces)
             Destroy(piece);
         loadedPieces.Clear();
+
+        if (track == null)
+            return;
 
         this.track = track;
         analisys = new TrackAnalisys(track);
@@ -45,19 +57,42 @@ public class Race : MonoBehaviour
             else
                 spawnedPiece.GetComponent<Renderer>().material = trackMaterial;
         }
+
+        LoadCar(car);
     }
 
-    public void Play(CarScriptable car)
+    public void LoadCar(CarScriptable car)
     {
+        if (carObject)
+            Destroy(carObject);
+
+        if (car == null)
+            return;
+
         this.car = car;
+
+        if (track == null)
+            return;
+
         carObject = Instantiate(car.Prefab);
         carObject.transform.SetPositionAndRotation(track.StartPieceModel.position, track.StartPieceModel.rotation);
         carObject.GetComponent<PrometeoCarController>().bodyRenderer.material.color = car.Color;
 
         carObject.transform.LookAt(analisys.stepPositions[1]);
         carObject.transform.position += 0.75f * Vector3.up;
+    }
 
+    public void Play()
+    {
         isPlaying = true;
+        startTime = Time.realtimeSinceStartup;
+    }
+
+    public void Stop()
+    {
+        isPlaying = false;
+        LoadTrack(track);
+        LoadCar(car);
     }
 
 
@@ -68,14 +103,25 @@ public class Race : MonoBehaviour
             angle += Time.deltaTime * 10;
             cam.position = analisys.center;
             cam.eulerAngles = new Vector3(35, angle, 0);
-            cam.position -= cam.forward * analisys.size * 1.5f;
+            cam.position -= PREVIEW_DISTANCE_MULTIPLIER * analisys.size * cam.forward;
         }
 
         if (isPlaying)
         {
+            TimeChanged?.Invoke(this, Time.realtimeSinceStartup - startTime);
+
             cam.SetPositionAndRotation(carObject.transform.position, carObject.transform.rotation);
             cam.localEulerAngles = new Vector3(35, cam.eulerAngles.y, 0);
             cam.position -= cam.forward * 5;
+
+            if (carObject.transform.position.y < -10)
+                RaceFinished?.Invoke(this, EventArgs.Empty);
+
+            if (Vector3.Distance(carObject.transform.position, track.EndPieceModel.position) < DISTANCE_TO_FINISH_THRESHOLD)
+            {
+                RaceFinished?.Invoke(this, EventArgs.Empty);
+                PlayerPrefs.SetFloat(track.name, Time.realtimeSinceStartup);
+            }
         }
     }
 }

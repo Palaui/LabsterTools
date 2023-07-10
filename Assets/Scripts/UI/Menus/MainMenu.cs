@@ -9,6 +9,9 @@ public class MainMenu : MonoBehaviour
     private const string SELECTED_CAR = "Selected Car";
     private const string PREFERRED_CAR = "Preferred Car";
 
+    [SerializeField] private GameObject waitingRoomUI;
+    [SerializeField] private GameObject raceUI;
+
     [SerializeField] private Race race;
     [SerializeField] private DataScriptable data;
     [SerializeField] private CarEntryWidget carEntryWidgetPrefab;
@@ -19,8 +22,11 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI selectedCarText;
     [SerializeField] private TextMeshProUGUI preferredCarText;
+    [SerializeField] private TextMeshProUGUI recordText;
+    [SerializeField] private TextMeshProUGUI currentTimeText;
 
     [SerializeField] private Button playButton;
+    [SerializeField] private Button backButton;
 
     private CarScriptable selectedCar;
     private TrackScriptable selectedTrack;
@@ -48,13 +54,16 @@ public class MainMenu : MonoBehaviour
         preferredCarText.text = NO_SELECTED_TRACK;
 
         playButton.onClick.AddListener(OnPlayPressed);
-    }
+        backButton.onClick.AddListener(OnBackPressed);
 
+        race.TimeChanged += ShowCurrentTime;
+    }
 
     private void OnCarPressed(object sender, CarScriptable car)
     {
         selectedCar = car;
         selectedCarText.text = $"{SELECTED_CAR}: {car.name}";
+        race.LoadCar(car);
     }
 
     private void OnTrackPressed(object sender, TrackScriptable track)
@@ -69,7 +78,33 @@ public class MainMenu : MonoBehaviour
         if (!selectedTrack || !selectedCar)
             return;
 
-        race.Play(selectedCar);
-        gameObject.SetActive(false);
+        race.Play();
+        race.RaceFinished += (_, _) => { OnBackPressed(); };
+        waitingRoomUI.SetActive(false);
+        raceUI.SetActive(true);
+
+        recordText.text = PlayerPrefs.HasKey(selectedTrack.name) ?
+            $"Record - {FormatTime(PlayerPrefs.GetFloat(selectedTrack.name))}" :
+            "Record - No record yet";
+    }
+
+    private void OnBackPressed()
+    {
+        race.RaceFinished = null;
+        race.Stop();
+        waitingRoomUI.SetActive(true);
+        raceUI.SetActive(false);
+    }
+
+    private void ShowCurrentTime(object sender, float time)
+    {
+        currentTimeText.text = $"Timer: {FormatTime(time)}";
+    }
+
+    private string FormatTime(float time)
+    {
+        return $"{(int)time / 60}:" +
+                $"{(int)time % 60}:" +
+                $"{(int)(time * 1000) % 1000}";
     }
 }
