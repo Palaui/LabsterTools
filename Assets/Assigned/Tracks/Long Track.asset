@@ -17,10 +17,6 @@ MonoBehaviour:
     piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-  - id: 911acd9e-3d23-437b-ad58-b143cba08fee
-    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
-    position: {x: 0, y: 0, z: 6}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
   - id: 158a9f99-f079-45f4-be5e-8c36257e9d43
     piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
     position: {x: 0, y: 0, z: 12}
@@ -128,6 +124,14 @@ MonoBehaviour:
   - id: c3651664-19f1-4ac1-b4d9-24317a0a7020
     piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
     position: {x: -24, y: 0, z: 12}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: a9ba2c0f-e473-49d0-91e0-02745ad3a716
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: -6}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - id: 1495765f-272e-4650-b12a-abb587a088c1
+    piece: {fileID: 11400000, guid: 0c900297bc167134f87a9d7087b0c946, type: 2}
+    position: {x: 0, y: 0, z: 6}
     rotation: {x: 0, y: 0, z: 0, w: 1}
   startPieceModel:
     id: a201770a-3eac-4743-aa92-de6d03504c3b

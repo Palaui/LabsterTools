@@ -173,6 +173,7 @@ public class TrackPieceManagerElement : BaseManager
                 return;
 
             CreateNewPiece(textField.value);
+            CreatePieceGroup();
         };
 
         Button backButton = new Button();

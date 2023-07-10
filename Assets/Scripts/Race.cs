@@ -112,7 +112,7 @@ public class Race : MonoBehaviour
         {
             angle += Time.deltaTime * 10;
             cam.position = analisys.center;
-            cam.eulerAngles = new Vector3(35, angle, 0);
+            cam.eulerAngles = new Vector3(25, angle, 0);
             cam.position -= PREVIEW_DISTANCE_MULTIPLIER * analisys.size * cam.forward;
         }
 

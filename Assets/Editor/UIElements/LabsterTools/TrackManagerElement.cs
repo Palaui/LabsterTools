@@ -353,9 +353,9 @@ public class TrackManagerElement : BaseManager
                 spawnedPiece.GetComponent<Renderer>().material = trackMaterial;
         }
 
-        TrackAnalisys analisys = new TrackAnalisys(track);
+        TrackAnalisys analysis = new TrackAnalisys(track);
 
-        if (analisys.GetFeedback(out string feedback))
+        if (analysis.GetFeedback(out string feedback))
             alert.style.color = Color.green;
         else
             alert.style.color = Color.red;
