@@ -27,9 +27,9 @@ public class Car : MonoBehaviour
 
         //  velocity -= velocity * (1 - car.Grip / 100) * Time.fixedDeltaTime;
         if (Input.GetKey(KeyCode.A))
-            rb.AddTorque(0, -car.TurnSpeed * Time.fixedDeltaTime / 8, 0, ForceMode.VelocityChange);
+            rb.angularVelocity -= car.TurnSpeed * Time.fixedDeltaTime * Vector3.up / 4;
         if (Input.GetKey(KeyCode.D))
-            rb.AddTorque(0, car.TurnSpeed * Time.fixedDeltaTime / 8, 0, ForceMode.VelocityChange);
+            rb.angularVelocity += car.TurnSpeed * Time.fixedDeltaTime * Vector3.up / 4;
         if (Input.GetKey(KeyCode.W))
             rb.AddForce(car.Acceleration * Time.fixedDeltaTime * transform.forward, ForceMode.VelocityChange);
         if (Input.GetKey(KeyCode.S))

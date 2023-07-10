@@ -4,6 +4,8 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
 using System.Collections.Generic;
+using MacFsWatcher;
+using System.Runtime.ConstrainedExecution;
 
 public class CarManagerElement : BaseManager
 {
@@ -240,7 +242,7 @@ public class CarManagerElement : BaseManager
         if (currentCarGhost == null || carObjectField.value == null)
             return;
 
-        currentCarGhost.GetComponent<Renderer>().sharedMaterial.color = (carObjectField.value as CarScriptable).Color;
+        currentCarGhost.GetComponent<PrometeoCarController>().bodyRenderer.sharedMaterial.color = (carObjectField.value as CarScriptable).Color;
     }
 
     private void DestroyGhost()

@@ -352,7 +352,7 @@ public class TrackManagerElement : BaseManager
     private void MoveSceneViewCamera()
     {
         SceneView.lastActiveSceneView.pivot = currentPieceGhost.transform.position;
-        SceneView.lastActiveSceneView.rotation = Quaternion.Euler(35, 120, 0);
+        //SceneView.lastActiveSceneView.rotation = Quaternion.Euler(35, 120, 0);
         SceneView.lastActiveSceneView.size = 6;
         SceneView.lastActiveSceneView.Repaint();
     }

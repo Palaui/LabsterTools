@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -53,8 +52,7 @@ public class Race : MonoBehaviour
         this.car = car;
         carObject = Instantiate(car.Prefab);
         carObject.transform.SetPositionAndRotation(track.StartPieceModel.position, track.StartPieceModel.rotation);
-        carObject.AddComponent<Car>().Initialize(car);
-        carObject.GetComponent<Renderer>().material.color = car.Color;
+        carObject.GetComponent<PrometeoCarController>().bodyRenderer.material.color = car.Color;
 
         carObject.transform.LookAt(analisys.stepPositions[1]);
         carObject.transform.position += 0.75f * Vector3.up;
