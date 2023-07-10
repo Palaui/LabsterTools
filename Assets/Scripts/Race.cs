@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -54,7 +53,10 @@ public class Race : MonoBehaviour
         this.car = car;
         carObject = Instantiate(car.Prefab);
         carObject.transform.SetPositionAndRotation(track.StartPieceModel.position, track.StartPieceModel.rotation);
+        carObject.AddComponent<Car>().Initialize(car);
         carObject.GetComponent<Renderer>().material.color = car.Color;
+
+        carObject.transform.LookAt(analisys.stepPositions[1]);
         carObject.transform.position += 0.75f * Vector3.up;
 
         isPlaying = true;
@@ -73,8 +75,8 @@ public class Race : MonoBehaviour
 
         if (isPlaying)
         {
-            cam.position = carObject.transform.position;
-            cam.localEulerAngles = new Vector3(35, 0, 0);
+            cam.SetPositionAndRotation(carObject.transform.position, carObject.transform.rotation);
+            cam.localEulerAngles = new Vector3(35, cam.eulerAngles.y, 0);
             cam.position -= cam.forward * 5;
         }
     }
