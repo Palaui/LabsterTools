@@ -33,7 +33,7 @@ public class Race : MonoBehaviour
     public EventHandler RaceFinished;
 
 
-    public void LoadTrack(TrackScriptable track)
+    public void LoadTrack(TrackScriptable track, TrackAnalisys analisys)
     {
         foreach (GameObject piece in loadedPieces)
             Destroy(piece);
@@ -43,7 +43,7 @@ public class Race : MonoBehaviour
             return;
 
         this.track = track;
-        analisys = new TrackAnalisys(track);
+        this.analisys = analisys;
 
         for (int i = 0; i < track.PieceModels.Count; i++)
         {
@@ -101,7 +101,7 @@ public class Race : MonoBehaviour
     public void Stop()
     {
         isPlaying = false;
-        LoadTrack(track);
+        LoadTrack(track, new TrackAnalisys(track));
         LoadCar(car);
     }
 

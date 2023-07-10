@@ -34,18 +34,24 @@ public class LabsterTools : EditorWindow
             TrackManagerElement trackManagerElement = new TrackManagerElement();
             ChangeManager(trackManagerElement);
         });
-        RadioButton trackPieceManager = new RadioButton("Track Piece Manager");
+        trackManager.style.marginRight = 20;
+        trackManager.style.fontSize = 16;
+
+       RadioButton trackPieceManager = new RadioButton("Track Piece Manager");
         trackPieceManager.RegisterCallback<MouseUpEvent>(e =>
         {
             TrackPieceManagerElement trackPieceManagerElement = new TrackPieceManagerElement();
             ChangeManager(trackPieceManagerElement);
         });
+        trackPieceManager.style.marginRight = 20;
+        trackPieceManager.style.fontSize = 16;
         RadioButton carManager = new RadioButton("Car Manager");
         carManager.RegisterCallback<MouseUpEvent>(e =>
         {
             CarManagerElement carManagerElement = new CarManagerElement();
             ChangeManager(carManagerElement);
         });
+        carManager.style.fontSize = 16;
 
         radioGroup.Add(trackManager);
         radioGroup.Add(trackPieceManager);

@@ -22,6 +22,7 @@ public class TrackManagerElement : BaseManager
 
     private VisualElement root;
     private GroupBox mainGroup;
+    private Label alert;
     private GroupBox newTrackGroup;
 
     private ObjectField trackObjectField;
@@ -99,6 +100,9 @@ public class TrackManagerElement : BaseManager
         trackObjectField.tooltip = "Drag or select the track you want to work on.";
         trackObjectField.RegisterValueChangedCallback((evt) =>
         {
+            if (evt.newValue == null)
+                alert.text = "";
+
             RefreshGrid();
             Load();
         });
@@ -127,8 +131,21 @@ public class TrackManagerElement : BaseManager
 
         mainGroup.Add(refreshButton);
         mainGroup.Add(topGroup);
+
+        alert = new Label();
+        alert.text = "";
+        alert.style.unityTextAlign = TextAnchor.MiddleCenter;
+        alert.style.unityFontStyleAndWeight = FontStyle.Bold;
+        alert.style.fontSize = 16;
+        alert.style.color = Color.red;
+        alert.style.marginTop = 5;
+        alert.style.marginBottom = 5;
+        alert.style.whiteSpace = WhiteSpace.Normal;
+        alert.style.flexWrap = Wrap.Wrap;
+
         topGroup.Add(trackObjectField);
         topGroup.Add(button);
+        mainGroup.Add(alert);
     }
 
     private void CreateTrackPiecesGrid()
@@ -308,7 +325,11 @@ public class TrackManagerElement : BaseManager
 
         TrackScriptable track = trackObjectField.value as TrackScriptable;
         if (track.PieceModels.Count == 0)
+        {
+            alert.style.color = Color.red;
+            alert.text = "Track has no pieces";
             return;
+        }
 
         for (int i = 0; i < track.PieceModels.Count; i++)
         {
@@ -331,6 +352,14 @@ public class TrackManagerElement : BaseManager
             else
                 spawnedPiece.GetComponent<Renderer>().material = trackMaterial;
         }
+
+        TrackAnalisys analisys = new TrackAnalisys(track);
+
+        if (analisys.GetFeedback(out string feedback))
+            alert.style.color = Color.green;
+        else
+            alert.style.color = Color.red;
+        alert.text = feedback;
     }
 
     private void UpdateAllTracks()
@@ -352,7 +381,6 @@ public class TrackManagerElement : BaseManager
     private void MoveSceneViewCamera()
     {
         SceneView.lastActiveSceneView.pivot = currentPieceGhost.transform.position;
-        //SceneView.lastActiveSceneView.rotation = Quaternion.Euler(35, 120, 0);
         SceneView.lastActiveSceneView.size = 6;
         SceneView.lastActiveSceneView.Repaint();
     }

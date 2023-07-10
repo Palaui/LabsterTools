@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     private const string NO_SELECTED_TRACK = "No track selected";
     private const string SELECTED_CAR = "Selected Car";
     private const string PREFERRED_CAR = "Preferred Car";
+    private const string UNKNOWN = "Unknown";
 
     [SerializeField] private GameObject waitingRoomUI;
     [SerializeField] private GameObject raceUI;
@@ -72,8 +73,18 @@ public class MainMenu : MonoBehaviour
     private void OnTrackPressed(object sender, TrackScriptable track)
     {
         selectedTrack = track;
-        preferredCarText.text = $"{PREFERRED_CAR}: {track.name}";
-        race.LoadTrack(track);
+        preferredCarText.text = $"{PREFERRED_CAR}: {UNKNOWN}";
+
+        TrackAnalisys trackAnalisys = default;
+        if (track != null)
+        {
+            trackAnalisys = new TrackAnalisys(track);
+            CarScriptable car = trackAnalisys.GetBestCar(data.Cars);
+            if (car != null)
+                preferredCarText.text = $"{PREFERRED_CAR}: {car.name}";
+        }
+
+        race.LoadTrack(track, trackAnalisys);
     }
 
     private void OnPlayPressed()

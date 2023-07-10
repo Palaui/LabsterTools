@@ -64,6 +64,7 @@ public class TrackPieceElement : MonoBehaviour
 
         track.RemovePiece(model);
         DestroyImmediate(gameObject);
+        Modified?.Invoke(this, EventArgs.Empty);
     }
 }
 

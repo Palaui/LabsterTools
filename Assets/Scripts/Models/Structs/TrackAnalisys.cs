@@ -3,6 +3,8 @@ using UnityEngine;
 
 public struct TrackAnalisys
 {
+    private const float TURN_POINTS_MULTIPLIER = 0.4f;
+
     private readonly TrackScriptable track;
 
     public readonly List<CircuitStep> steps;
@@ -33,6 +35,58 @@ public struct TrackAnalisys
 
         isComplete = false;
         CalculateSteps();
+    }
+
+    public CarScriptable GetBestCar(List<CarScriptable> cars)
+    {
+        CarScriptable bestCar = null;
+        float bestPoints = 0;
+
+        foreach (CarScriptable car in cars)
+        {
+            float points = 0;
+            float rectAmount = 0;
+            foreach (CircuitStep step in steps)
+            {
+                switch (step)
+                {
+                    case CircuitStep.Rect:
+                        points += car.Acceleration + car.MaxSpeed * rectAmount;
+                        rectAmount++;
+                        break;
+                    case CircuitStep.Turn:
+                        points += (car.TurnSpeed + car.Grip) * TURN_POINTS_MULTIPLIER;
+                        rectAmount = 0;
+                        break;
+                }
+            }
+
+            if (points > bestPoints)
+            {
+                bestPoints = points;
+                bestCar = car;
+            }
+        }
+
+        return bestCar;
+    }
+
+    public bool GetFeedback(out string feedback)
+    {
+        if (track.StartPieceModel.id == track.EndPieceModel.id)
+        {
+            feedback =  "The start and end pieces are the same.";
+            return false;
+        }
+
+        if (!IsComplete)
+        {
+            feedback = "Analysis could not find a path to the finish. Disclaimer: If you are building a track that uses jumps it might still be valid, make sure it is possible to be completed.";
+            return false;
+        }
+
+        feedback = "Track analysis found no errors. Disclaimer: Incorrectly rotated pieces are not considered an error, they can be used to create trick tracks.";
+        return true;
     }
 
 
