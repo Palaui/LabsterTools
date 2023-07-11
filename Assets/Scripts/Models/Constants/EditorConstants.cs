@@ -1,7 +1,9 @@
 
 public static class EditorConstants
 {
+    public const string NO_TRACK_OR_PIECE_FOUND = "No track or piece found. Please, delete this ghost.";
     public const string ON_GRID_AUTO = "Track piece was not on grid and has been placed automatically. Please, press again if the current position is correct.";
+    public const string PIECE_ALREADY_IN_THAT_POSITION = "There is already a piece in that position. Please, delete it first if needs to be changed.";
 
     public const float GRID_SIZE = 6;
     public const float RECT = 90;

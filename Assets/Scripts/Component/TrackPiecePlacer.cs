@@ -32,6 +32,12 @@ public class TrackPiecePlacer : MonoBehaviour
 
     public void AddToTrack()
     {
+        if (track == null || piece == null)
+        {
+            Alerted?.Invoke(this, EditorConstants.NO_TRACK_OR_PIECE_FOUND);
+            return;
+        }
+
         if (!transform.IsOnGrid())
         {
             Alerted?.Invoke(this, EditorConstants.ON_GRID_AUTO);
@@ -39,11 +45,12 @@ public class TrackPiecePlacer : MonoBehaviour
             return;
         }
 
-        if (track == null || piece == null)
+        if (track.ContainsPieceAt(transform.position))
         {
-            Debug.LogError("TrackPiecePlacer: Track or piece is null");
+            Alerted?.Invoke(this, EditorConstants.PIECE_ALREADY_IN_THAT_POSITION);
             return;
         }
+
 
         TrackPieceModel model = new TrackPieceModel(piece, transform.position, transform.rotation);
         track.AddPiece(model);
